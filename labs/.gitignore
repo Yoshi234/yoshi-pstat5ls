@@ -1,0 +1,6 @@
+**/*.pdf
+**/*.Rproj
+**/.Rhistory
+**/.Rproj.user
+**/assets
+**/.DS_Store

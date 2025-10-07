@@ -1,0 +1,56 @@
+---
+title: "PSTAT 5LS Lab 0"
+author: "Your Name Here"
+date: "Fall 2025"
+output: html_document
+---
+
+# Lab Notes
+
+Use this place to take any notes during your lab section.
+
+- Type any notes here
+- Add new notes by using the dash `-` to create a list
+
+# Lab Code
+
+You can follow along with the TA's tutorial by entering code in the chunks below and then clicking on the green "play" button. We have entered the code for first chunk below.
+
+```{r tryIt1, error = T}
+# Use this code chunk to print the phrase "Hello World!" to the screen
+print("Hello world!")
+
+```
+
+```{r tryIt2, error = T}
+# Use this code chunk to compute what 5 times 7 is (we use a star * for multiplication)
+
+
+```
+
+```{r tryIt3, error = T}
+# Use this code chunk to compute what 36 divided by 6 is, and assign it to x 
+
+
+```
+
+```{r tryIt4, error = T}
+# Use this code chunk to see the value of x that R has stored
+
+
+```
+
+```{r tryIt5, error = T}
+# Run this code chunk to see what happens if you use X (capitalized) instead
+
+
+```
+
+# R Code Cheat Sheet
+
+## `<-`
+- Assigns a value to a name
+- `name <- value`
+
+
+

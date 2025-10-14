@@ -1,0 +1,634 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[
+  ignorenonframetext,
+]{beamer}
+\newif\ifbibliography
+\usepackage{pgfpages}
+\setbeamertemplate{caption}[numbered]
+\setbeamertemplate{caption label separator}{: }
+\setbeamercolor{caption name}{fg=normal text.fg}
+\beamertemplatenavigationsymbolsempty
+% remove section numbering
+\setbeamertemplate{part page}{
+  \centering
+  \begin{beamercolorbox}[sep=16pt,center]{part title}
+    \usebeamerfont{part title}\insertpart\par
+  \end{beamercolorbox}
+}
+\setbeamertemplate{section page}{
+  \centering
+  \begin{beamercolorbox}[sep=12pt,center]{section title}
+    \usebeamerfont{section title}\insertsection\par
+  \end{beamercolorbox}
+}
+\setbeamertemplate{subsection page}{
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center]{subsection title}
+    \usebeamerfont{subsection title}\insertsubsection\par
+  \end{beamercolorbox}
+}
+% Prevent slide breaks in the middle of a paragraph
+\widowpenalties 1 10000
+\raggedbottom
+\AtBeginPart{
+  \frame{\partpage}
+}
+\AtBeginSection{
+  \ifbibliography
+  \else
+    \frame{\sectionpage}
+  \fi
+}
+\AtBeginSubsection{
+  \frame{\subsectionpage}
+}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\usetheme[]{AnnArbor}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={PSTAT 5LS Lab 0},
+  pdfauthor={Joshua Lee},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{PSTAT 5LS Lab 0}
+\author{Joshua Lee}
+\date{Fall 2025}
+
+\begin{document}
+\frame{\titlepage}
+
+\section{Introduction to PSTAT 5LS}\label{introduction-to-pstat-5ls}
+
+\begin{frame}{Introduction}
+\phantomsection\label{introduction}
+Hi everyone, I'm Josh! - PhD in the PSTAT department - Fan of piano /
+classical music - F1 Racing enthusiast
+
+Office Hours: - \textbf{Building 434, Room 109: 4pm to 5:30pm on
+FRIDAYS}
+
+Contact: - \href{mailto:jlee246@ucsb.edu}{\nolinkurl{jlee246@ucsb.edu}}
+\end{frame}
+
+\begin{frame}{Section Logistics}
+\phantomsection\label{section-logistics}
+\begin{itemize}
+\tightlist
+\item
+  Sections meet twice a week (Tuesdays/Thursdays 11am - 11:50am)
+\item
+  Section attendance is worth 10\% of your overall grade in PSTAT 5LS
+\item
+  We understand that sometimes you'll need to miss section, because
+  ``life happens''. Our course policy will be to drop your lowest 3
+  attendance scores (absences included)
+\item
+  Use these 3 drops wisely! Save them for a rainy day!
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Homework Logistics}
+\phantomsection\label{homework-logistics}
+\begin{itemize}
+\tightlist
+\item
+  Each week there will be a homework assignment through Gradescope
+\item
+  Homework is open for 7 days and is due before 11:59 p.m. Pacific on
+  Thursdays
+\item
+  Late work is not accepted and extensions are not permitted because the
+  solutions are posted at the deadline
+\item
+  Your lowest 1 homework score will be dropped
+\item
+  Use this 1 HW drop wisely! Don't just blow off homework one week and
+  then wish you had that drop later in the quarter!
+\end{itemize}
+\end{frame}
+
+\section{Learning Objectives}\label{learning-objectives}
+
+\begin{frame}{R Learning Objectives}
+\phantomsection\label{r-learning-objectives}
+\begin{enumerate}
+\tightlist
+\item
+  Learn the difference between R, RStudio, and R Markdown
+\item
+  Become familiar with the RStudio interface
+\item
+  Understand key components of an R Markdown document
+\item
+  Learn how to use R to do basic calculations
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{Statistical Learning Objectives}
+\phantomsection\label{statistical-learning-objectives}
+\begin{enumerate}
+\tightlist
+\item
+  Understand that technology can be helpful in statistics
+\end{enumerate}
+\end{frame}
+
+\section{Lab Tutorial}\label{lab-tutorial}
+
+\begin{frame}{Getting Started: What is R?}
+\phantomsection\label{getting-started-what-is-r}
+In Statistics, we often use computers to analyze data. There are a lot
+of ``statistical computing environments'' that can help you do
+statistical analyses. One of the most popular (and powerful) is called
+R. R is a programming language that is designed for manipulating data,
+doing calculations, and making graphical displays. R works by writing
+\textbf{R code}.
+
+That might sound scary, but \emph{don't worry}: this is not a
+programming class. Over the course of the quarter, you'll learn how to
+edit and write some basic R code to help you analyze data to answer
+research questions. Our goal with PSTAT 5LS labs is to help you learn
+the basics of R and R coding, but through the lens of answering
+statistical questions.
+\end{frame}
+
+\begin{frame}{What are all these ``R'' terms?}
+\phantomsection\label{what-are-all-these-r-terms}
+There are a lot of ``R'' words floating around. What's going on?
+
+\begin{itemize}
+\tightlist
+\item
+  \emph{R} is a ``statistical computing environment'' that's designed
+  for manipulating data, generating plots, and performing analyses. It's
+  also a programming language. You'll be \emph{using R} this quarter.
+\item
+  \emph{RStudio} is an ``integrated development environment (IDE)'' for
+  R (you'll never have to hear the term IDE again in this class).
+  Basically, RStudio is a pretty interface that makes working with R
+  easier. You use R inside of RStudio. If R is ice cream, RStudio is the
+  cone or cup.
+\item
+  \emph{R Markdown} is a way to write pretty analysis reports that
+  combines R code, R output (plots, analysis results, etc.) and text in
+  one document. This lab document is an R Markdown report!
+\end{itemize}
+\end{frame}
+
+\begin{frame}{JupyterHub}
+\phantomsection\label{jupyterhub}
+We will be accessing R and RStudio through JupyterHub. JupyterHub is a
+web-based multiuser environment that will allow us to share with you the
+files you need for lab. LSIT has provided us with access to JupyterHub.
+
+Each time we begin a lab or when you work on a data analysis question
+for homework,navigate to \url{http://bit.ly/47PSVM6}. This link will
+import whatever we are working on for that day. If you just want to open
+a session and not import the lab or a blank homework file into your
+directoroy, use this link here. \url{https://pstat5ls.lsit.ucsb.edu/}.
+
+This will open your ``instance'' of JupyterHub and copy all necessary
+files for your PSTAT 5LS work that week.
+\end{frame}
+
+\begin{frame}{Initial View of RStudio}
+\phantomsection\label{initial-view-of-rstudio}
+Click on the `pstat5ls-fall25' folder.
+
+\begin{center}
+\includegraphics[]{assets/images/RStudio-initial.png}
+\end{center}
+\end{frame}
+
+\begin{frame}{Accessing the Lab}
+\phantomsection\label{accessing-the-lab}
+After you have clicked on the `pstat-5ls-f25-student' folder, click on
+the folder for this lab (lab0-intro-to-R) to open it:
+
+\begin{center}
+\includegraphics[width=10cm]{assets/images/lab0-intro-to-R.png}
+\end{center}
+\end{frame}
+
+\begin{frame}{RStudio Project Screen}
+\phantomsection\label{rstudio-project-screen}
+\pandocbounded{\includegraphics[keepaspectratio]{assets/images/r_homescreen.png}}
+\end{frame}
+
+\begin{frame}{Working with R in JupyterHub}
+\phantomsection\label{working-with-r-in-jupyterhub}
+When you navigate to \url{http://bit.ly/47PSVM6}, you are telling
+JupyterHub to bring in all of the files that have prepared for PSTAT
+5LS. This means that any files you have worked on will be overwritten.
+
+To avoid your work being overwritten, \textbf{rename} both the notes and
+report files. For Lab 0, you want to rename lab0-notes.Rmd. You could
+add your name to the file name (e.g., lab0-notes-brianw.Rmd).
+\end{frame}
+
+\begin{frame}{Renaming Files}
+\phantomsection\label{renaming-files}
+To rename a file, check the box next to the file you want to rename.
+Click ``Rename'' in the files pane, rename the file, then click OK.
+
+You may also save your work in a separate folder, and there will never
+be any danger of it being overwritten.
+
+\vspace{0.25cm}
+\begin{center}
+\includegraphics[width=8cm]{assets/images/beforeRename.png}
+\end{center}
+\end{frame}
+
+\begin{frame}{Renaming Files}
+\phantomsection\label{renaming-files-1}
+Your file will then appear with its new name.
+
+\vspace{0.25cm}
+\begin{center}
+\includegraphics[width=8cm]{assets/images/afterRename.png}
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]{R Markdown}
+\phantomsection\label{r-markdown}
+R Markdown lets you combine text, R code, and plots in one pretty,
+reproducible report. If you're curious about this, you can find more
+details on using R Markdown at \url{http://rmarkdown.rstudio.com}.
+
+R Markdown runs code contained in ``chunks''. A chunk looks like this:
+
+\pandocbounded{\includegraphics[keepaspectratio]{assets/images/chunk.png}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(}\StringTok{"Hello world!"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Hello world!"
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{R Markdown Chunk}
+\phantomsection\label{r-markdown-chunk}
+\pandocbounded{\includegraphics[keepaspectratio]{assets/images/chunk.png}}
+
+Notice that the code, \texttt{print("Hello\ world!")} is contained
+between three backticks
+(\texttt{\textasciigrave{}\textasciigrave{}\textasciigrave{}}, below the
+esc key on a US English keyboard; the same key as the tilde) and some
+stuff in curly braces \{\}. This is how R Markdown knows where your
+chunks start and stop. We will almost always provide pre-made chunks for
+you to use.
+\end{frame}
+
+\begin{frame}[fragile]{Running a Chunk}
+\phantomsection\label{running-a-chunk}
+You can just run a single chunk by clicking the green ``play'' button in
+the upper right corner of the chunk. It's usually a good idea to click
+the ``Run All Chunks Above'' button immediately to the left of the play
+button first. So you should click Run All Chunks Above, then the play
+button.
+
+\pandocbounded{\includegraphics[keepaspectratio]{assets/images/run_chunk.png}}
+
+If you can't find the play button, just highlight the code you want to
+run and click the Run button in the top right corner of the editor pane.
+
+Let's try this code together in the \texttt{tryIt1} chunk in your notes
+document. Note that the code is already entered for you in this first
+code chunk.
+\end{frame}
+
+\begin{frame}{Knitting a Document}
+\phantomsection\label{knitting-a-document}
+When you click the \textbf{Knit} button in RStudio, a document will be
+generated that includes both content as well as the output of any
+embedded R code chunks within the document.
+
+\pandocbounded{\includegraphics[keepaspectratio]{assets/images/knit-button.png}}
+\end{frame}
+
+\begin{frame}[fragile]{Tips for R Markdown}
+\phantomsection\label{tips-for-r-markdown}
+\begin{enumerate}
+\item
+  \textbf{Knit and knit often}: Frequently knitting your document will
+  help you make sure that all your code works and that the document
+  looks the way you want.
+\item
+  \textbf{Don't be afraid to experiment}: Nobody gets things exactly
+  right the first time, and we all forget how things work sometimes.
+  Keep trying, and you'll eventually get what you want!
+\item
+  \textbf{Formatting}: You can make text \textbf{bold} by surrounding it
+  with two asterisks (\texttt{**}) and \emph{italic} by surrounding it
+  with one asterisk (\texttt{*}). You can make text
+  \texttt{look\ like\ code} by surrounding it with single backticks.
+\end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]{Using R as a Calculator}
+\phantomsection\label{using-r-as-a-calculator}
+At it's most basic, R is a fancy calculator.
+
+Let's try this example together in the \texttt{tryIt2} chunk in your lab
+notes!
+
+Remember, you can run the code in this chunk by clicking the green
+``play'' button in the upper right corner of the chunk.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{5} \SpecialCharTok{*} \DecValTok{7}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 35
+\end{verbatim}
+
+When you run the chunk, you'll see a \texttt{{[}1{]}} before the output
+of \texttt{35}. \emph{Just ignore this. The result is \texttt{35}.}
+
+All of the symbols you think you'd use to do math work: \texttt{+} for
+addition, \texttt{-} for subtraction, \texttt{*} for multiplication,
+\texttt{/} for division, \texttt{\^{}} for exponentiation.
+\end{frame}
+
+\begin{frame}[fragile]{R Function Syntax}
+\phantomsection\label{r-function-syntax}
+We'll be using R primarily through the use of \emph{functions}. A
+function generally looks something like this:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{function.name}\NormalTok{(argument1, argument2, ...)}
+\end{Highlighting}
+\end{Shaded}
+
+Notice that we have the name of the function, followed immediately by an
+open parenthesis \textcolor{blue}{`(`} without a space, then a sequence
+of \emph{arguments} to the function, separated by commas
+\textcolor{blue}{`,`}, then a close parenthesis \textcolor{blue}{`)`}.
+\end{frame}
+
+\begin{frame}[fragile]{R ``Assignment'' Syntax}
+\phantomsection\label{r-assignment-syntax}
+Often, we want R to remember the results of a calculation so that we can
+use it later. We can give the result of some code a name by
+\textbf{assigning} it to something.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OtherTok{\textless{}{-}} \DecValTok{36} \SpecialCharTok{/} \DecValTok{6}
+\end{Highlighting}
+\end{Shaded}
+
+We read that code as ``x \emph{gets} 36 / 6''. The arrow is made using
+the less-than symbol (\texttt{\textless{}}, shift + comma on a US
+English keyboard) and a hyphen.
+
+Fill out the \texttt{tryIt3} code chunk in your notes to assign 36
+divided by 6 to the variable \texttt{x}.
+\end{frame}
+
+\begin{frame}[fragile]{R ``Assignment'' Syntax}
+\phantomsection\label{r-assignment-syntax-1}
+Now, we've stored the result as \texttt{x}, and R will remember that
+\texttt{x} is 6. You can see in the environment pane in RStudio (top
+right) that there's now a ``value'' called \texttt{x} and it's 6. You
+can also access the value of \texttt{x} by typing \texttt{x} into R.
+Check it out:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 6
+\end{verbatim}
+
+Use the \texttt{tryIt4} code chunk in your notes to see the value that R
+stored for the variable \texttt{x}.
+\end{frame}
+
+\begin{frame}[fragile]{R is Case-Sensitive}
+\phantomsection\label{r-is-case-sensitive}
+R is ``case-sensitive'', which means that upper-case letters are
+\emph{different from} lower-case letters. Notice what happens when we
+ask R for the value of \texttt{X}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{X}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Error in eval(expr, envir, enclos): object 'X' not found
+\end{verbatim}
+
+Use the \texttt{tryIt5} code chunk in your notes to see what happens if
+you type in a capital X.
+
+When giving things names in R, you can only use a combination of
+letters, numbers, periods, and underscores, and the \textbf{names have
+to start with a letter or a period}. People tend to use underscores or
+periods instead of spaces.
+\end{frame}
+
+\begin{frame}[fragile]{Common Errors}
+\phantomsection\label{common-errors}
+Watch what happens when you try to assign something to a ``bad'' name:
+
+\small
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tik tok }\OtherTok{\textless{}{-}} \DecValTok{12}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Error: <text>:1:5: unexpected symbol
+## 1: tik tok
+##         ^
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{4}\NormalTok{eva }\OtherTok{\textless{}{-}} \DecValTok{4} \SpecialCharTok{*} \DecValTok{2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Error: <text>:1:1: unexpected input
+## 1: 4ev
+##     ^
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\_hi\_mom }\OtherTok{\textless{}{-}} \DecValTok{5}\SpecialCharTok{\^{}}\DecValTok{2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Error: <text>:1:2: unexpected symbol
+## 1: _hi_mom
+##      ^
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Common Errors}
+\phantomsection\label{common-errors-1}
+The errors saying ``unexpected symbols'' or ``unexpected input'' are R's
+way of telling you that these names are not allowed, and that you should
+use a different name. Here's how we'd correct these:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tiktok }\OtherTok{\textless{}{-}} \DecValTok{12}
+
+\NormalTok{forever }\OtherTok{\textless{}{-}} \DecValTok{4} \SpecialCharTok{*} \DecValTok{2}
+
+\NormalTok{hi\_mom }\OtherTok{\textless{}{-}} \DecValTok{5}\SpecialCharTok{\^{}}\DecValTok{2}
+\end{Highlighting}
+\end{Shaded}
+\end{frame}
+
+\begin{frame}{Knit Your Document One Final Time}
+\phantomsection\label{knit-your-document-one-final-time}
+At the end of any of the labs we do, be sure to knit one more time. This
+is so you have a finalized version of your work just in case you have
+made any changes.
+
+Be sure that a popup window shows you the file! Otherwise there is an
+error in the creation of the document. If this happens, you will need to
+troubleshoot the R markdown file. I am happy to help you with this.
+
+Also be sure that you read over your file and make sure that it looks
+right! If pieces are missing, then you have an error somewhere in the
+creation of the document. You should troubleshoot the R Markdown file.
+\end{frame}
+
+\begin{frame}{Where Do We Go from Here?}
+\phantomsection\label{where-do-we-go-from-here}
+During our next section meeting, we will use R for data analysis. You'll
+learn how to
+
+\begin{itemize}
+\tightlist
+\item
+  load a data file
+\item
+  examine the data file
+\item
+  create tables, graphical displays, and summary statistics
+\end{itemize}
+\end{frame}
+
+\section{Questions}\label{questions}
+
+\begin{frame}{What Questions Do You Have?}
+\phantomsection\label{what-questions-do-you-have}
+\end{frame}
+
+\end{document}

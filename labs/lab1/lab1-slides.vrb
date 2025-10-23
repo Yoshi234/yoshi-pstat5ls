@@ -1,0 +1,18 @@
+\frametitle{Side-by-side Box Plots}
+\phantomsection\label{side-by-side-box-plots}
+To compare groups, we we can use side-by-side box plots. For example, we
+can compare bill lengths across penguin species using the
+\texttt{boxplot()} function.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{boxplot}\NormalTok{(penguins}\SpecialCharTok{$}\NormalTok{bill\_length\_mm }\SpecialCharTok{\textasciitilde{}}\NormalTok{ penguins}\SpecialCharTok{$}\NormalTok{species,}
+        \AttributeTok{main =} \StringTok{"Box Plots of Penguin Bill Length by Species"}\NormalTok{,}
+        \AttributeTok{ylab =} \StringTok{"Bill Length (mm)"}\NormalTok{,}
+        \AttributeTok{xlab =} \StringTok{"Species"}\NormalTok{,}
+        \AttributeTok{col =} \FunctionTok{c}\NormalTok{(}\StringTok{"darkorange1"}\NormalTok{, }\StringTok{"mediumorchid2"}\NormalTok{, }\StringTok{"darkcyan"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+Try out the provided code in the \texttt{tryit9} chunk to generate these
+plots!

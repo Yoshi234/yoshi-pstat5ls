@@ -1,0 +1,126 @@
+---
+title: "PSTAT 5LS Lab 1"
+author: "Your Name Here"
+date: "Fall 2025"
+output: html_document 
+---
+
+# Lab Notes
+
+Use this place to take any notes during your lab section.
+
+- Type any notes here
+- Add new notes by using the dash `-` to create a list
+
+# Lab Code
+
+Use the chunks below to try out any code that you'd like. Run the code chunk below to load the `penguins` data set so you can try things out with this data set.
+
+```{r loadPenguins, error = T}
+# Run this code chunk to load the penguins data set into the environment
+penguins <- read.csv("penguins.csv", stringsAsFactors = TRUE)
+
+```
+
+```{r tryIt1, error = T}
+# Use this code chunk to peek at the penguins data set
+
+
+```
+
+```{r tryIt2, error = T}
+# Use this code chunk to examine the structure of the penguins data set
+
+
+```
+
+```{r tryIt3, error = T}
+# Use this code chunk to get help with the hist function
+
+
+```
+
+```{r tryIt4, error = T}
+# Run this code chunk to view the summary of the flipper_length_mm variable in the penguins data
+summary(penguins$flipper_length_mm)
+
+```
+
+```{r tryIt5, error = T}
+# Use this code chunk to have R give you the standard deviation of the flipper_length_mm variable in the penguins data in addition to the other summary statistics (you'll need two lines of code, one for the summary statistics and one for the standard deviation)
+
+
+```
+
+```{r tryIt6, error = T}
+# Run this code chunk to get all of the specific number summary values
+min(penguins$flipper_length_mm)
+mean(penguins$flipper_length_mm)
+median(penguins$flipper_length_mm)
+max(penguins$flipper_length_mm)
+sd(penguins$flipper_length_mm)
+IQR(penguins$flipper_length_mm)
+# Note that IQR is in all capital letters. Anything else (e.g., `iqr(penguins$flipper_length_mm)`) would give you an error
+
+```
+
+```{r tryIt7, error = T}
+# Replace the "your title here" and "your axis label here" for the x-axis (xlab) in the code chunk below and then run this code chunk. 
+# Watch out for the dreaded typos! If you get an error message, try to debug it yourself before asking for help!
+# When you make your own histograms, be sure to add the `main` and `xlab` labels for better readability 
+hist(penguins$flipper_length_mm,
+     main = "your title here",
+     xlab = "your axis label here",
+     col = "lightblue")
+
+```
+
+```{r tryIt8, error = T}
+# Use this code chunk to make a box plot of the variable flipper_length_mm in the penguins data. Don't forget a title using `main` and a y-axis label using `ylab`.
+
+
+```
+
+```{r tryIt9, error = T}
+# Run this code chunk to make a side-by-side boxplot of penguins body mass by the categorical variable `species`
+boxplot(penguins$bill_length_mm ~ penguins$species,
+        main = "Box Plots of Penguin Bill Length by Species",
+        ylab = "Bill Length (mm)",
+        xlab = "Species",
+        col = c("darkorange1", "mediumorchid2", "darkcyan"))
+
+```
+
+# R Code Cheat Sheet
+
+## `<-`
+- Assigns a value to a name
+- `name <- value`
+
+## `$`
+- tells R that we are looking for a variable in a particular data frame
+- `data_set_name$data_set_variable`
+
+## `summary(data_set_name$data_set_variable)`
+- creates the five number summary of a numeric variable
+
+## `hist(data_set_name$data_set_variable)`
+- creates a histogram of a numeric variable
+
+## `boxplot(data_set_name$data_set_variable)`
+- creates a boxplot of a numeric variable
+
+## `boxplot(data_set_name$numeric_variable ~ data_set_name$categorical_variable)`
+- creates side-by-side boxplots of a numeric variable grouped by a categorical variable
+
+## Important plotting arguments
+
+### `main = "Title of Your Graph in Double Quotes"`
+- graph title that must be inside a set of double quotes
+
+### `xlab = "x-axis Label of Your Graph in Double Quotes"`
+- the x- (horizontal) axis label that must be inside a set of double quotes
+
+### `ylab = "y-axis Label of Your Graph in Double Quotes"`
+- the y- (vertical) axis label that must be inside a set of double quotes
+

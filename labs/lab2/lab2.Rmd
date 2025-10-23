@@ -1,0 +1,45 @@
+# Simulations and Randomness R
+
+We will explore how to use 
+
++ `set.seed()`
++ `simulate_chance_model()`
++ `sum()`
+
+**Seeds**:
+
++ seeds determine a random sequence which is entirely predictible
+if you know the seed itself. 
+
+```{r}
+set.seed(2573)
+```
+
+**Simulate Chance Model**
+
+In order to install this package, we need to install the 'remotes'
+package for GitHub-based package installation. First, run 
+
+```r
+install.packages("remotes")
+install.packages("checkmate")
+```
+
+or in Conda
+
+```
+conda install r-remotes r-checkmate
+```
+
+Then, execute
+
+```{r}
+library(remotes)
+install_github("STATS250SBI/stats250sbi")
+```
+
+Now, we can access the package as follows:
+
+```{r}
+library(stats250sbi)
+```

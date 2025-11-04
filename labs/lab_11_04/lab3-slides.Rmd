@@ -1,0 +1,391 @@
+---
+title: "PSTAT 5LS Lab 3"
+author: "TA Name Here"
+date: "Fall 2025"
+output:
+  beamer_presentation:
+    theme: AnnArbor
+    fig_crop: false
+    fig_width: 6
+    fig_height: 4
+  pdf_document: default
+header-includes:
+  - \renewcommand{\footnotesize}{\tiny}
+  # - \newcommand{\theHtable}{\thetable}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(stats250sbi)
+```
+
+# Announcements & Recap
+
+## Announcements
+
+Insert any relevant announcements, important dates, things you want to remember here.
+
+## HW Recap
+
+Write down some common errors that you spotted while you graded/had office hours for HW assignments.
+
+# Learning Objectives
+
+## R Learning Objectives
+
+1.  Revisit simulation for one proportion
+2.  Work with `pnorm()` and `qnorm()`
+3.  Introduce `prop_test()` to understand test statistics and confidence intervals
+
+## Statistical Learning Objectives
+
+1.  Understand how area under the normal curve relates to probability.
+2.  Understand how to move between probabilities and quantiles of the normal distribution.
+3.  Build intuition for the relationship between simulated p-values and p-values which arise from a normal approximation.
+4.  Understand the standard normal distribution and its corresponding $z$ test statistic.
+5.  Understand how confidence intervals can provide an estimate for the true parameter.
+
+## Functions covered in this lab
+
+1.  `plot_norm()`
+2.  `pnorm()`
+3.  `qnorm()`
+4.  `prop_test()`
+
+# Lab Tutorial
+
+## Another Simulation Example
+
+The American Pet Products Association found that a record high of 70% of all households in the United States had pets in 2020. Has the percentage of U.S. households with pets changed since then? Recently, a group of veterinarians surveyed a random sample of 750 U.S. households and found that 504 had at least one pet.
+
+Is there evidence to support the claim that the proportion of U.S. households with pets differs from the 70% in 2020?
+
+Our hypotheses to test if there is a difference are $$H_0: p = 0.70 \text{ and } H_A: p \neq 0.70$$
+
+## Setting Up the Simulation
+
+What are the elements of the simulation?
+
+|                   | **Assuming the chance model...**     |
+|-------------------|--------------------------------------|
+| One draw          |                                      |
+| Blue poker chip   |                                      |
+| Yellow poker chip |                                      |
+| Chance of blue    |                                      |
+| One repetition    |                                      |
+
+## Setting Up the Simulation
+
+What are the elements of the simulation?
+
+|                   | **Assuming the chance model...**     |
+|-------------------|--------------------------------------|
+| One draw          | *one household*                      |
+| Blue poker chip   | *the household has at least one pet* |
+| Yellow poker chip | *the household has no pets*          |
+| Chance of blue    | *0.70*                               |
+| One repetition    | *750 households*                     |
+
+## Running the Simulation
+
+Recall that we need to set a seed before running a simulation so that we can talk about the results as a class (it will be helpful for us to have the same results). Let's arbitrarily set the seed to 729. Run this in the `setSeed` code chunk in your notes file.
+
+```{r setSeed, echo = FALSE}
+set.seed(729)
+```
+
+## Running the Simulation
+
+Then let's run the simulation 2000 times. In the `tryIt1` code chunk, you'll need to enter values for:
+
+-   `chanceSuccess` (what we assume $p$ is when the null hypothesis is true)
+-   `numDraws` (this will equal the sample size)
+-   `numRepetitions` (the number of times you want to run the simulation so you can get a sense of the distribution of $\hat p$ when the null hypothesis is true)
+
+```{r sim1}
+sim1 <- simulate_chance_model(chanceSuccess = 0.70, 
+                              numDraws = 750, 
+                              numRepetitions = 2000)
+```
+
+`sim1` should now be in your Environment pane.
+
+## Histogram of Simulation Results
+
+The sample statistic is $\hat p = \frac{504}{750} = 0.672$, so let's put a line in the histogram to indicate our observed statistic so that we can get a sense about how unusual it it to get $\hat p = 0.672$ when $p = 0.70$.
+
+We have a two-sided hypothesis test, so it would have been just as unusual to see a sample proportion of 0.728, so we will put a line in the histogram to indicate this as well.
+
+<!-- Be sure to talk with the students how we get the 0.728 (this is something they often find confusing).  -->
+
+## Histogram of Simulation Results
+
+Enter the values 0.672 and 0.728 in the `tryIt2` code chunk to create a histogram of the simulated proportions from the 2000 repetitions of the simulation. 
+
+```{r histSimulate, echo = FALSE, out.width = "80%", fig.align = "center"}
+hist(sim1, 
+     main = "Histogram of 2000 Simulation Results",
+     xlab = "Simulated Proportion of U.S. Households with at Least One Pet")
+abline(v = 0.672, col = "red")
+abline(v = 0.728, col = "red")
+```
+
+## Estimated p-value
+
+The estimated p-value is the sum of the number of simulations that are as weird as or weirder than we observed (so, 0.672 or less) *and* the sum of the simulations that are as weird or weirder on the other side (at 0.728 or more). Run this in the `tryIt3` code chunk.
+
+```{r pvalue_sim1, echo = TRUE}
+total <- sum(sim1 <= 0.672) + sum(sim1 >= 0.728)  
+estimated_pvalue <- total/2000
+estimated_pvalue
+
+```
+
+What is our estimated p-value?
+
+<!-- The estimated p-value is 0.096. -->
+
+## Conclusion
+
+After running the simulation 2000 times, assuming that the chance of success was indeed 0.70, the probability that we would get an observed sample proportion of 504/750 or more extreme was computed to be 0.096.
+
+The p-value of 0.096 is larger than the typical significance level of $\alpha = 0.05$. There is not enough evidence to conclude that the proportion of U.S. households with pets differs from its record high of 70%.
+
+## But We Observed a Different Result?!
+
+You might have asked yourself, "But wait, why do we have little to no evidence to support the claim? I did in fact observe a rate different than 70% in my sample (I observed 67.2%, in fact). Isn't a 2.8% difference strong evidence?"
+
+This is where normal theory can help us understand that the difference of 2.8% between the $\hat{p}$ and the assumed $p$ was not enough evidence.
+
+## Histogram from Simulation
+
+It turns out, the histogram that we created using simulation is in fact approximately normal.
+
+We talked about how the distribution is centered at $H_0$, the chance of success. Thus, we can assume the mean of the sampling distribution of $\hat p$ is the 0.70 from our null hypothesis.
+
+To find the standard error, which is an estimate of the standard deviation for our sample statistic $\hat p$, we will use the following formula:
+
+$$\sqrt{\frac{p_0(1-p_0)}{n}}$$ 
+
+Let's compute the standard error, $SE(\hat{p})$.
+
+## Histogram from Simulation
+
+The standard error for $\hat p$ can be found with the formula $$\sqrt{\frac{p_0(1-p_0)}{n}}$$ Let's have R compute this for us. You will need to enter values for `p_0` and `n` in the `tryIt4` chunk in your notes and then run the chunk to calculate the SE.
+
+```{r, computeSE}
+p_0 <- 0.70
+n <- 750
+SE <- sqrt(p_0*(1 - p_0)/n)
+SE 
+```
+
+We will use the SE that R calculated to visualize the p-value for the hypothesis test.
+
+## Normal Distribution for Our Example
+
+Let's take a look at the approximate normal distribution for our U.S. households with pets example. Recall that, when the null hypothesis is true, the mean is **0.70**, the standard error is **0.0167**, and we want to shade **beyond** the values of 0.672 and 0.728. Enter the `mean` and `sd` in the `tryIt5` chunk in your notes and then run the chunk to visualize the p-value.
+
+```{r normalDistCode, eval = FALSE}
+plot_norm(mean = 0.67, 
+          sd = 0.0167, 
+          shadeValues = c(0.672, 0.728), 
+          direction = "beyond", 
+          col.shade = "darkgreen")
+```
+
+## Normal Distribution for Example
+
+```{r normalDistGraph, echo = FALSE}
+plot_norm(mean = 0.67, 
+          sd = 0.0167, 
+          shadeValues = c(0.672, 0.728), 
+          direction = "beyond", 
+          col.shade = "darkgreen")
+```
+
+## There Is in Fact Insufficient Evidence
+
+Now that we see that the standard deviation is 0.0167, or 1.67%, we can start to understand why observing a rate that was only 2.8% different from the assumed mean is not all that rare.
+
+Looking at the normal distribution plot, we can observe that 0.672 is between 1 and 2 standard deviations above the mean. Again, not all that rare.
+
+## Another Way to Calculate the p-value
+
+The `stats250sbi` package we have been using also contains a function called `prop_test()` that will calculate the value of the test statistic and the p-value for us. Professor Miller showed you this function briefly in lecture.
+
+You will need to send the function the following arguments:
+
+-   `x`: the number of "successes" in the sample
+-   `n`: the sample size
+-   `p`: the hypothesized population proportion
+-   `alternative`: where to shade (`"two.sided"`, `"less"`, `"greater"`)
+-   `conf.level` (optional): used to get a confidence interval (we will use this later)
+
+## Using `prop_test` for Our Pet Example
+
+We are testing $H_0: p = 0.70 \text{ and } H_A: p \neq 0.70$. You will need to enter values for
+
+-   `x` the number of successes (here the number of households with a pet)
+-   `n` the sample size
+-   `p` the value we assume $p$ to be when $H_0$ is true
+-   `alternative` the direction of $H_A$ (`"two.sided"`, `"less"`, `"greater"` -- make sure the direction is in quotes)
+
+in the `tryIt6` chunk in your notes before you run it.
+
+\vspace{0.25cm}
+
+```{r prop_test_pet, eval = FALSE}
+prop_test(x = 504, 
+          n = 750, 
+          p = 0.70, 
+          alternative = "two.sided")
+```
+
+## Using `prop_test` for Our Pet Example
+
+```{r prop_test_pet1, echo = FALSE}
+prop_test(x = 504, 
+          n = 750, 
+          p = 0.70, 
+          alternative = "two.sided")
+```
+
+## The `pnorm()` Function
+
+The p-value from `prop_test()` is pretty close to the p-value from our simulation.
+
+We can also compute the p-value using the `pnorm()` function. Recall the arguments you need to send to `pnorm()`:
+
+-   `q`: the quantile (value on the axis) for the normal distribution
+-   `mean`: the mean of the normal distribution ($\mu$)
+-   `sd`: the standard deviation of the normal distribution ($\sigma$)
+-   `lower.tail`: set to \textcolor{blue}{`TRUE`} initially, signifying that R will compute the probability **to the** \textcolor{blue}{LEFT} of `q`; if you would like R to compute the probability *to the* \textcolor{red}{right} of `q`, set `lower.tail` to \textcolor{red}{FALSE}
+
+## Computing the p-value for the Simulation Example
+
+Let's compute the approximate p-value using the normal distribution for our pet example. Recall that the mean of the sampling distribution of $\hat p$ is **0.70**, and the standard deviation is **0.0167**.
+
+Because the normal distribution is **symmetric** about the mean, we can find the probability of observing 0.672 or less (the area in the tail), then **double it**.
+
+## Computing the p-value for the Simulation Example
+
+Run this code in the `tryIt7` code chunk.
+
+```{r pvalue}
+2 * pnorm(q = 0.672, 
+      mean = 0.70, 
+      sd = 0.0167, 
+      lower.tail = FALSE)
+```
+
+## Comparing the Various p-values
+
+To recap, we have *three* ways to compute the p-value for a one proportion hypothesis test:
+
+1.  Create a set of simulated proportions using `simulate_chance_model()`, then using the `sum()` function to count the number of observations at or beyond the sample proportion divided by the number of observations.
+2.  Use the `prop_test()` function (which uses normal theory) by sending the number of successes observed, the sample size, the value of $H_0$, and the direction of the alternative hypothesis.
+3.  Compute the $\mu$ and $\sigma$ for the approximate normal distribution. Use the `pnorm()` function by sending the value of the sample proportion, $\mu$, $\sigma$, and the direction of the probability.
+
+Each of these will produce a slightly different result. **No need to worry about how close the values should be, or which value is "best".**
+
+## Comparing the Various p-values
+
+\scriptsize
+
+```{r comparepValue}
+sum(sim1 <= 0.672) / 2000 + sum(sim1 >= 0.728) / 2000
+prop_test(x = 504, n = 750, p = 0.70)
+pnorm(q = 0.672, mean = 0.70, sd = 0.0167, lower.tail = TRUE) * 2
+```
+
+\normalsize
+
+## Comparing the Various p-values
+
+1.  The simulation is the most accurate, because it is computing the p-value with simulated values.
+2.  `prop_test()` and `pnorm()` will lose some precision due to utilizing the normal approximation. This loss of precision should not affect our results.
+3.  `pnorm()` will lose some precision if we round the standard deviation to 3 decimal places. This loss of precision should not affect our results.
+
+## Using `prop_test()` to Find Confidence Intervals
+
+\small
+The output from `prop_test()` also provides a confidence interval for the population proportion. By default, R gives us a 95% confidence interval. We need to specify `x` (number of successes) and `n` (sample size).
+
+```{r prop_test_pet2, echo = TRUE, out.width = "70%"}
+prop_test(x = 504, n = 750)
+```
+
+## Using `prop_test()` to Find Confidence Intervals
+
+We can change the confidence level to a level other than 95% by adding the argument `conf.level` to the `prop_test()` function.
+
+In the `tryIt8` chunk, set `conf.level` to 0.98 to get a 98% confidence interval.
+
+```{r prop_test_pet3, eval = FALSE}
+prop_test(x = 504, 
+          n = 750, 
+          conf.level = 0.98)
+```
+
+## Using `prop_test()` to Find Confidence Intervals
+
+```{r prop_test_eval, echo = TRUE, out.width = "80%"}
+prop_test(x = 504, n = 750, conf.level = 0.98)
+```
+
+We estimate (at the 98% confidence level) that the population proportion of homes with pets is 0.632 to 0.712.
+
+## Using `prop_test()` to Find Confidence Intervals
+
+**Caution:** To get a two-sided confidence interval, the `alternative` argument *must* be set to `two.sided`. If it isn't, you will get a *confidence bound*.
+
+Note that `two.sided` is the default for `prop_test()`, so if you just want a confidence interval you can leave the `alternative` argument off.
+
+Confidence bounds can be useful when we have one-sided hypothesis tests, but we will leave them to your later statistics courses.
+
+## One More Example
+
+X, the social media platform formerly known as Twitter, saw a name change and policy changes once it was under new ownership. Shortly after the name change, seventy-five percent (75%) of all X users said that they planned to keep using X in 2024. Researchers at X would like to know if this rate differs for Millennials, those born between 1981 and 1996. A random sample of 100 Millennial users of X revealed that 65% planned to keep using X in 2024.
+
+## What Would We Expect to See in the Sample?
+
+If the rate of current Millennial users of X is the same as the rate for all X users, how many Millennial users of X from the sample of 100 would we expect to say that they planned to keep using X in 2024?
+
+<!-- We would expect 65 to keep using X in 2024. -->
+
+## Incorrect Alternative
+
+\small
+
+The researchers at X wanted to know if the rate of Millennials who planned to continue using X in 2024 differs from the rate of all users of X. The researcher in charge accidentally ran a one-sided hypothesis test and got the following output
+
+```{r incorrect_alternative}
+prop_test(x = 65, n = 100, p = 0.75, alternative = "two.sided")
+```
+
+## Correcting the Mistake
+
+The value of the test statistic for the incorrect alternative was $z = -2.309$. What should the test statistic be for the correct two-sided test?
+
+-   It should be half as much; that is, $z = -1.155$.
+-   It should be positive instead of negative; that is, $z = 2.309$.
+-   It should be the same; that is, $z = -2.309$.
+-   It should be twice as much; that is, $z = -4.618$.
+
+<!-- The test statistic will not change (the number of successes, sample size, and hypothesized proportion all remain the same). -->
+
+## Correcting the Mistake
+
+The p-value for the incorrect alternative was 0.01046. What should the p-value be for the correct two-sided test?
+
+-   It should be half as much; that is, p-value = 0.00523.
+-   It should be negative instead of positive; that is, p-value = $-0.01046$.
+-   It should be the same; that is, p-value = 0.01046.
+-   It should be twice as much; that is, p-value = 0.02092.
+
+<!-- We need to include the right tail in addition to the left tail. Since the normal distribution is symmetric, the p-value should be twice as much. -->
+
+# Questions
+
+## What Questions Do You Have?

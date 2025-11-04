@@ -1,0 +1,49 @@
+q5.1: 
+
+Correct: 
+Parameter: The proportion of new vehicles sold 
+which were ZEVs in 2023 (current year)
+
+H0: The proportion of vehicles sold which were ZEVs
+in 2022 is the same as it was in 2023
+
+p = 0.188
+
+H1: The proportion of vehicles sold which were ZEVs
+in 2023 is greater than it was in 2022
+
+p > 0.188
+
+q2.4:
+
+a: yes - we can make a causal statement because the 
+experimental units were randomly assigned to the 
+two treatments which mitigates the effect of all 
+other confounding variables which could have impacted
+the outcome. 
+
+b: No - we should not generalize to the population of 
+adults because the participants (1) were volunteers and 
+(2) were NOT randomly selected from the population of 
+adults but rather from the population of OVERWEIGHT 
+adults.
+
+q2.2: 
+
+blocking is a known source of variability that
+researchers want to control for in an experiment. 
+
+Correct: Yes - blocking is used here. Participants 
+are grouped by sex and then randomly assigned to one 
+of the two treatment groups. 
+
+
+q2.1: 
+
+Correct: 76 overweight adults (38 men / 38 women)
+who volunteered to be part of the study - random assignment to 
+treatment groups
+
+This is an experimental study with causal implications because 
+participants were randomly assigned to the treatments 
+(placebo = control and chia seeds = treatment 1) - full credit
